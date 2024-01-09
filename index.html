@@ -20,7 +20,8 @@
 <body>
     <h1>JWT datetime (all local)</h1>
     <h2>JWT encoded value</h2>
-    <textarea id="input" oninput="calc();"></textarea><br />
+    <textarea id="input"
+        oninput="calc();">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</textarea><br />
     <h2>jwt header</h2>
     <textarea id="header"></textarea><br />
     <h2>jwt payload</h2>
@@ -58,6 +59,7 @@
             }
             return updated
         }
+        calc();
         enc();
         function calc() {
             var input = document.getElementById('input');
