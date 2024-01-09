@@ -6,29 +6,81 @@
     <meta charset='utf-8'>
     <title>JWT datetime (all local)</title>
     <style>
-        textarea {
-            width: 400px;
-            height: 200px;
+        body {
+            padding: 20px;
+            margin-bottom: 20px;
         }
 
-        input[type="text"] {
-            width: 100%;
+        textarea {
+            width: 80%;
+            height: 200px;
+            padding: 4px;
+            margin-left: 1rem;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .leading {
+            grid-column: 1;
+        }
+
+        .trailing {
+            grid-column: 2;
+        }
+
+        .both {
+            grid-column: 1 / 3;
+            grid-row: 2;
+            background-color: rgb(231 229 228);
+            padding: 1rem;
+        }
+
+        footer {
+            padding: 20px;
         }
     </style>
 </head>
 
 <body>
     <h1>JWT datetime (all local)</h1>
-    <h2>JWT encoded value</h2>
-    <textarea id="input"
-        oninput="calc();">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</textarea><br />
-    <h2>jwt header</h2>
-    <textarea id="header"></textarea><br />
-    <h2>jwt payload</h2>
-    <textarea id="payload"></textarea><br />
-    <h3>encoder</h3>
-    <textarea id="encoderInput" oninput="enc();">{"alg":"None"}</textarea>
-    <textarea id="encoderOutput"></textarea>
+    <p>We do not record tokens. All validation and debugging is done on the client side.</p>
+
+    <div class="container">
+
+        <div class="leading">
+            <h2>JWT encoded value (edit me)</h2>
+            <textarea id="input"
+                oninput="calc();">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</textarea><br />
+        </div>
+
+        <div class="trailing">
+            <h2>jwt header</h2>
+            <textarea id="header"></textarea><br />
+            <h2>jwt payload</h2>
+            <textarea id="payload"></textarea><br />
+        </div>
+
+        <div class="both">
+            <div class="container">
+                <h3>encoder</h3>
+                <div class="leading">
+                    <textarea id="encoderInput" oninput="enc();">{"alg":"None"}</textarea>
+                </div>
+                <div class="trailing">
+                    <textarea id="encoderOutput"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        2024 <a href="https://github.com/xta/jwt-datetime">view on github</a>
+    </footer>
+
     <script>
         function pretty(json) {
             return JSON.stringify(json, null, 4);
