@@ -1,0 +1,66 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>JWT datetime (all local)</title>
+    <style>
+        textarea {
+            width: 400px;
+            height: 200px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>JWT datetime (all local)</h1>
+    <h2>JWT encoded value</h2>
+    <textarea id="input" oninput="calc();"></textarea><br />
+    <h2>jwt header</h2>
+    <textarea id="header"></textarea><br />
+    <h2>jwt payload</h2>
+    <textarea id="payload"></textarea><br />
+    <h3>encoder</h3>
+    <textarea id="encoderInput" oninput="enc();">{"alg":"None"}</textarea>
+    <textarea id="encoderOutput"></textarea>
+    <script>
+        function pretty(jsonStr) {
+            return JSON.stringify(JSON.parse(jsonStr), null, 4);
+        }
+        function enc() {
+            var encoderInput = document.getElementById('encoderInput');
+            var encoderOutput = document.getElementById('encoderOutput');
+            encoderOutput.value = btoa(encoderInput.value);
+        }
+        enc();
+        function calc() {
+            var input = document.getElementById('input');
+            var header = document.getElementById('header');
+            var payload = document.getElementById('payload');
+            if (input && input.value) {
+                var val = input.value.split('.');
+                try {
+                    header.value = pretty(atob(val[0]));
+                } catch (e) {
+                    header.value = "Invalid value: " + e;
+                    console.error(e)
+                }
+                try {
+                    payload.value = pretty(atob(val[1]));
+                } catch (e) {
+                    payload.value = "Invalid value: " + e;
+                    console.error(e);
+                }
+            } else {
+                console.log('no data');
+            }
+        }
+    </script>
+</body>
+
+</html>
