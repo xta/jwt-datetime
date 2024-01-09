@@ -29,13 +29,34 @@
     <textarea id="encoderInput" oninput="enc();">{"alg":"None"}</textarea>
     <textarea id="encoderOutput"></textarea>
     <script>
-        function pretty(jsonStr) {
-            return JSON.stringify(JSON.parse(jsonStr), null, 4);
+        function pretty(json) {
+            return JSON.stringify(json, null, 4);
         }
         function enc() {
             var encoderInput = document.getElementById('encoderInput');
             var encoderOutput = document.getElementById('encoderOutput');
             encoderOutput.value = btoa(encoderInput.value);
+        }
+        function secondsToDateLabel(seconds) {
+            var date = new Date(seconds * 1000)
+            return `${date.toLocaleString()} (${seconds})`
+        }
+        function update(obj) {
+            var updated = {}
+            var keys = ['exp', 'iat', 'nbf']
+            for (var [key, value] of Object.entries(obj)) {
+                if (keys.includes(key)) {
+                    try {
+                        updated[key] = secondsToDateLabel(value)
+                    } catch (e) {
+                        console.error(e)
+                        updated[key] = value
+                    }
+                } else {
+                    updated[key] = value
+                }
+            }
+            return updated
         }
         enc();
         function calc() {
@@ -45,13 +66,16 @@
             if (input && input.value) {
                 var val = input.value.split('.');
                 try {
-                    header.value = pretty(atob(val[0]));
+                    header.value = pretty(JSON.parse(atob(val[0])));
                 } catch (e) {
                     header.value = "Invalid value: " + e;
                     console.error(e)
                 }
                 try {
-                    payload.value = pretty(atob(val[1]));
+                    var jsonStr = atob(val[1])
+                    var obj = JSON.parse(jsonStr)
+                    var updatedObj = update(obj)
+                    payload.value = pretty(updatedObj);
                 } catch (e) {
                     payload.value = "Invalid value: " + e;
                     console.error(e);
